@@ -2,6 +2,16 @@
 
 **Python script** that provides **real-time synchronization** of a local folder (`SOURCE`) to a USB folder (`DESTINATION`). It's designed to keep your backup or working copy instantly updated on portable storage by detecting file **creation, modification, and deletion**, while intelligently handling USB **unplug/replug events** for continuous operation.
 
+**!!This script will not sync these files.!!**
+## Files starting with . (dot files)
+-Examples: .git, .gitignore, .env, .vscode, .idea, .DS_Store
+
+## Files ending with ~ (backup files)
+-Examples: file.txt~, backup~
+
+## Files with extensions: .tmp, .swp, .swx
+-These are temporary files from editors
+
 ---
 
 ## ✨ Features
