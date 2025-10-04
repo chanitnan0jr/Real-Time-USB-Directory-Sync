@@ -67,7 +67,7 @@ You can configure VS Code to start the sync script every time you open the works
 In VS Code, go to Terminal → Configure Tasks → Create tasks.json file from template → Others.
 Replace the content with the configuration below:
 
-JSON
+```JSON
 {
     "version": "2.0.0",
     "tasks": [
@@ -75,9 +75,7 @@ JSON
             "label": "Run USB Sync",
             "type": "shell",
             "command": "python",
-            "args": [
-                "Your path to Sync.py"
-            ],
+            "args": ["Your path to Sync.py"],
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -92,6 +90,6 @@ JSON
         }
     ]
 }
-
+```
 ⚠️ IMPORTANT: You must update the path in the args ["Your Path to Sync.py"] to the exact location of your sync.py file. to make this work automatically
 Now, every time you open this VS Code workspace, the sync script will start automatically in a shared terminal panel.
