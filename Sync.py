@@ -1,13 +1,14 @@
 import os
 import shutil
 import time
+import threading
 from pathlib import Path
 from datetime import datetime
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
-SOURCE = r"Change this to your local folder"
-DESTINATION = r"Change this to your USB folder"
+SOURCE = r"D:\test_dir"
+DESTINATION = r"E:\Workspace\USB_testdir"
 
 class SyncHandler(FileSystemEventHandler):
     def __init__(self, src, dst):
@@ -66,7 +67,7 @@ class SyncHandler(FileSystemEventHandler):
     
     def on_deleted(self, event):
         if not event.is_directory:
-            #handle deletions
+            # Optionally handle deletions
             src_file = Path(event.src_path)
             try:
                 rel_path = src_file.relative_to(self.src)
@@ -135,22 +136,42 @@ if __name__ == "__main__":
     observer.schedule(event_handler, SOURCE, recursive=True)
     observer.start()
     
-    print("👁️  Watching for changes... (Press Ctrl+C to stop)")
+    print("👁️  Watching for changes...")
+    print("💡 Type 'q' or 'quit' and press Enter to stop the script")
     print("-"*60)
+    
+    stop_flag = [False]  # Use list to make it mutable in nested function
+    
+    def check_usb():
+        """Check USB connection in background"""
+        last_connected = True
+        while not stop_flag[0]:
+            time.sleep(5)
+            currently_connected = Path(DESTINATION).exists()
+            
+            if last_connected and not currently_connected:
+                print("\n⚠️  USB drive disconnected. Waiting for reconnection...")
+            elif not last_connected and currently_connected:
+                print("✅ USB drive reconnected! Performing sync...")
+                initial_sync(SOURCE, DESTINATION)
+            
+            last_connected = currently_connected
+    
+    # Start USB checking in background thread
+    usb_thread = threading.Thread(target=check_usb, daemon=True)
+    usb_thread.start()
     
     try:
         while True:
-            time.sleep(1)
-            # Periodically check if USB is still connected
-            if not Path(DESTINATION).exists():
-                print("\n⚠️  USB drive disconnected. Waiting for reconnection...")
-                while not Path(DESTINATION).exists():
-                    time.sleep(5)
-                print("✅ USB drive reconnected! Performing sync...")
-                initial_sync(SOURCE, DESTINATION)
+            user_input = input().strip().lower()
+            if user_input in ['q', 'quit', 'exit', 'stop']:
+                print("\n🛑 Stopping sync service...")
+                stop_flag[0] = True
+                break
     except KeyboardInterrupt:
         print("\n\n🛑 Stopping sync service...")
-        observer.stop()
+        stop_flag[0] = True
     
+    observer.stop()
     observer.join()
     print("✅ Sync service stopped.")

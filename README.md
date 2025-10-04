@@ -1,38 +1,56 @@
-# Real-Time USB Directory Sync 🔄💾
+# Real-Time USB Directory Sync
 
-A powerful **Python script** designed for seamless, **real-time synchronization** of a local directory to a USB drive. It provides a robust, set-it-and-forget-it solution for keeping a backup or working copy on your portable storage up-to-date without manual intervention.
-
----
-
-## ✨ Features
-
-* **Real-Time Monitoring:** Uses the `watchdog` library to detect file creation, modification, and deletion **instantly**, avoiding resource-heavy polling.
-* **Initial Full Sync:** Ensures the destination is consistent with the source when the script first starts.
-* **Intelligent USB Handling:** Gracefully handles USB unplug and replug events. Syncing **automatically pauses** when the drive is removed and **resumes** when it's reconnected.
-* **Reliable Logging:** Logs all changes and events with **timestamps** for transparency and troubleshooting.
-* **Change Debouncing:** Prevents duplicate sync operations during rapid-fire file changes.
-* **Full Change Support:** Correctly handles **file creation, modification, and deletion** events.
+A Python script that automatically syncs a local folder (`SOURCE`) to a USB folder (`DESTINATION`) in real-time. It detects file creation, modification, and deletion, and handles USB unplug/replug events gracefully.
 
 ---
 
-## 🛠️ Requirements
+## Features
 
-* **Python 3.8+** (Must be installed on Windows).
-* The **`watchdog`** Python library.
+- Real-time sync on file changes (no polling).  
+- Initial full sync on startup.  
+- Automatic pause if USB is removed, resumes when reconnected.  
+- Logs changes with timestamps.  
+- Debounces rapid changes to avoid duplicate syncs.  
+- Handles file creation, modification, and deletion.  
+- Stop the script gracefully by typing `q` or `quit` in the console.  
 
 ---
 
-## 🚀 Installation
+## Requirements
+
+- **Python 3.8+** installed on Windows.  
+- **watchdog** Python library for folder monitoring.  
+
+---
+
+## Installation
 
 ### 1. Install Python
+Download Python from [python.org](https://www.python.org/downloads/windows/) and make sure to check **Add Python to PATH** during installation.
 
-1.  Download the installer from [python.org](https://www.python.org/downloads/).
-2.  **Crucially**, ensure you check the box that says **"Add Python to PATH"** during the installation process.
-
-### 2. Install `watchdog` Library
-
-Open your Command Prompt or PowerShell and execute the following command:
+### 2. Install watchdog library
+Open Command Prompt or PowerShell and run:
 
 ```bash
 pip install watchdog
+```
+### 3. Download the script
+Save your sync.py script (or any name you like) somewhere on your PC.
 
+## Usage
+### 1. Set your paths in the script
+Important! Change these to match your directories:
+python
+Copy code
+SOURCE = r"Change this to your local folder"         
+DESTINATION = r"Change this to your USB folder" 
+### 2. Run the script
+```bash
+python sync.py
+```
+### 3. Behavior
+The script will perform an initial full sync.
+It will then watch the source folder for changes and sync them to the USB in real-time.
+If the USB is removed, it pauses syncing.
+When the USB is reconnected, it automatically resumes and re-syncs.
+To stop the script gracefully, type q, quit, exit, or stop in the console and press Enter.
