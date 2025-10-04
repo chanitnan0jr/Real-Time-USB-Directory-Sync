@@ -2,23 +2,27 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Run USB Sync",
+            "label": "Run USB Sync (Background)",
             "type": "shell",
             "command": "python",
             "args": [
                 "D:\\Code\\Project\\Real-Time-USB-Directory-Sync\\Sync.py"
             ],
+            "isBackground": true,
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": true,
-                "panel": "shared"
-            },
-            "problemMatcher": []
+            "runOptions": {
+                "runOn": "folderOpen"
+            }
         }
     ]
 }
