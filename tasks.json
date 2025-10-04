@@ -5,9 +5,7 @@
             "label": "Run USB Sync (Background)",
             "type": "shell",
             "command": "python",
-            "args": [
-                "D:\\Code\\Project\\Real-Time-USB-Directory-Sync\\Sync.py"
-            ],
+            "args": ["Your path to Sync.py script"],
             "isBackground": true,
             "problemMatcher": [],
             "presentation": {

@@ -7,8 +7,8 @@ from datetime import datetime
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
-SOURCE = r"D:\test_dir"
-DESTINATION = r"E:\Workspace\USB_testdir"
+SOURCE = r"Your USB Directory"
+DESTINATION = r"Your USB Directory"
 
 class SyncHandler(FileSystemEventHandler):
     def __init__(self, src, dst):

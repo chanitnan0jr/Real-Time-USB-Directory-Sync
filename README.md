@@ -47,6 +47,7 @@ You must edit the sync.py file to set your source and destination directories. C
 
 Python
 SOURCE = r"Change this to your local folder"
+
 DESTINATION = r"Change this to your USB folder"
 
 ### 2. Run Manually
